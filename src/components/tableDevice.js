@@ -65,7 +65,7 @@ export function TableDevice({ setEditDevice, onChangeArea }) {
               <TableCell>{device.position}</TableCell>
               <TableCell>{device.sucursal}</TableCell>
               <TableCell>
-                <Badge color="emerald" icon={RiFlag2Line}>
+                <Badge color={device.status === 'Enabled' ? 'emerald' : 'red'} icon={RiFlag2Line}>
                   {device.status}
                 </Badge>
               </TableCell>

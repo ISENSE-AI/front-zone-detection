@@ -1,3 +1,4 @@
+import React, { useEffect, useState, useMemo } from 'react';
 import { RiFlag2Line } from '@remixicon/react';
 import {
   Badge,
@@ -10,6 +11,9 @@ import {
   TableRow,
 } from '@tremor/react';
 
+import Connect from '@/connect/Connect';
+import { useUser } from '@/userContext';
+/*
 const data = [
   {
     device: 'Bodega',
@@ -57,8 +61,31 @@ const data = [
     status: 'active',
   },
 ];
+*/
 
 export function TableData() {
+
+  const [devices, setDevices] = useState([]);
+  const user = useUser();
+  const connect = useMemo(() => new Connect(), []);
+
+  const fetchDevices = async () => {
+    try {
+      const queryParams = {
+        institutionId: `${user.user.institutionId}`
+      };
+      const response = await connect.get('/device', queryParams);
+      setDevices(response); // Actualiza el estado con la respuesta del API
+    } catch (error) {
+      console.error("Error al cargar dispositivos:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDevices();
+  }, [user.user.institutionId]);
+
+
   return (
     <Card>
       <h3 className="text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">List of enroled devices</h3>
@@ -67,23 +94,23 @@ export function TableData() {
           <TableRow>
             <TableHeaderCell>Device</TableHeaderCell>
             <TableHeaderCell>Position</TableHeaderCell>
-            <TableHeaderCell>Department</TableHeaderCell>
+            <TableHeaderCell>Sucursal</TableHeaderCell>
             <TableHeaderCell>Status</TableHeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((item) => (
-            <TableRow key={item.device}>
-              <TableCell>{item.device}</TableCell>
+          {devices.map((devices) => (
+            <TableRow key={devices.Name}>
+              <TableCell>{devices.deviceName}</TableCell>
               <TableCell>
-                {item.Role}
+                {devices.position}
               </TableCell>
               <TableCell>
-                {item.departement}
+                {devices.sucursal}
               </TableCell>
               <TableCell>
-                <Badge color="emerald" icon={RiFlag2Line}>
-                  {item.status}
+                <Badge color={devices.status === 'Enabled' ? 'emerald' : 'red'} icon={RiFlag2Line}>
+                  {devices.status}
                 </Badge>
               </TableCell>
             </TableRow>
