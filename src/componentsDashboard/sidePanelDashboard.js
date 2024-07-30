@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import Connect from '@/connect/Connect';
 
-export function SidePanel({ isOpen, onClose, editDevice }) {
+export function SideBarDashboard({ isOpen, onClose, editDevice }) {
   const [device, setDevice] = useState(null);
   const [pixels, setPixels] = useState([]);
   const connect = useMemo(() => new Connect(), []);
 
   useEffect(() => {
+    console.log('Editing device:', editDevice); // Añade este log para verificar el dispositivo que se está editando
     setDevice(editDevice);
     setPixels([]); // Resetea los puntos cuando se abre un nuevo dispositivo
   }, [editDevice]);
@@ -114,39 +115,6 @@ export function SidePanel({ isOpen, onClose, editDevice }) {
                   type="text" 
                   name="sucursal" 
                   value={device.sucursal || ''} 
-                  onChange={handleInputChange} 
-                  className="w-full px-3 py-2 border rounded"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700">Status</label>
-                <select 
-                  name="status" 
-                  value={device.status || ''} 
-                  onChange={handleInputChange} 
-                  className="w-full px-3 py-2 border rounded"
-                >
-                  <option value="">Select Status</option>
-                  <option value="Enabled">Enabled</option>
-                  <option value="Disabled">Disabled</option>
-                </select>
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700">Streaming Link</label>
-                <input 
-                  type="text" 
-                  name="streamingLink" 
-                  value={device.streamingLink || ''} 
-                  onChange={handleInputChange} 
-                  className="w-full px-3 py-2 border rounded"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700">Path Frame</label>
-                <input 
-                  type="text" 
-                  name="pathFrame" 
-                  value={device.pathFrame || ''} 
                   onChange={handleInputChange} 
                   className="w-full px-3 py-2 border rounded"
                 />

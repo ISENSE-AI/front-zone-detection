@@ -8,16 +8,18 @@ import { CardData } from '@/componentsDashboard/card';
 import { BarChartData } from '@/componentsDashboard/barChart';
 import Connect from '@/connect/Connect';
 import { useUser } from '@/userContext';
+import { SideBarDashboard } from '@/componentsDashboard/sidePanelDashboard';
 
 
 
 
 export default function Dashboard() {
 
+    const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
     const [enabledDevice, setEnableDevice] = useState(0)
     const [disabledDevice, setDisabledDevice] = useState(0)
     const [totalDevices, setTotalDevices] = useState(0);
-
+    const [editDevice, setEditDevice]=useState();
     const connect = useMemo(() => new Connect(), []);
     const user = useUser();
     
@@ -48,7 +50,12 @@ export default function Dashboard() {
         fetchStreams();
       }, [connect, user.user.institutionId]);
     
-
+      const handleChangeArea = () => {
+        setIsSidePanelOpen(true);
+      };
+      const handleCloseSidePanel = () => {
+        setIsSidePanelOpen(false);
+      };
 
     return(
         <>
@@ -74,7 +81,8 @@ export default function Dashboard() {
                             </div>
                         </div>
                         <div>
-                            <TableData></TableData>
+                            <TableData setEditDevice= {setEditDevice} onChangeArea={handleChangeArea}></TableData>
+                            <SideBarDashboard editDevice={editDevice} isOpen={isSidePanelOpen} onClose={handleCloseSidePanel} />
                         </div>
                     </div>
                     <div>

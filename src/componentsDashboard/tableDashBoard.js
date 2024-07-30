@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { RiFlag2Line } from '@remixicon/react';
+import { RiFlag2Line, RiDeleteBinLine, RiEdit2Line } from '@remixicon/react';
 import {
   Badge,
   Card,
@@ -9,62 +9,13 @@ import {
   TableHead,
   TableHeaderCell,
   TableRow,
+  Button
 } from '@tremor/react';
 
 import Connect from '@/connect/Connect';
 import { useUser } from '@/userContext';
-/*
-const data = [
-  {
-    device: 'Bodega',
-    Role: 'central principal',
-    departement:
-      'recursos humanos',
-    status: 'active',
-  },
-  {
-    device: 'Jardin',
-    Role: 'central principal',
-    departement:
-      'TI',
-    status: 'active',
-  },
-  {
-    device: 'Bodega 2',
-    Role: 'central principal',
-    departement: 'TI',
-    status: 'active',
-  },
-  {
-    device: 'Entrada Principal',
-    Role: 'central principal',
-    departement: 'Seguridad',
-    status: 'active',
-  },
-  {
-    device: 'Garaje',
-    Role: 'central principal',
-    departement: 'TI',
-    status: 'active',
-  },
-  {
-    device: 'Pasillo',
-    Role: 'central principal',
-    departement:
-      'TI',
-    status: 'active',
-  },
-  {
-    device: 'Sala',
-    Role: 'central principal',
-    departement: 'TI',
-    status: 'active',
-  },
-];
-*/
 
-export function TableData() {
-
+export function TableData({ setEditDevice, onChangeArea }) {
   const [devices, setDevices] = useState([]);
   const user = useUser();
   const connect = useMemo(() => new Connect(), []);
@@ -81,10 +32,14 @@ export function TableData() {
     }
   };
 
+  const handleChangeArea = (device) => {
+    setEditDevice(device); // Establece el dispositivo completo para editar
+    onChangeArea(); // Llama a la función para abrir el panel lateral
+  };
+
   useEffect(() => {
     fetchDevices();
   }, [user.user.institutionId]);
-
 
   return (
     <Card>
@@ -96,22 +51,28 @@ export function TableData() {
             <TableHeaderCell>Position</TableHeaderCell>
             <TableHeaderCell>Sucursal</TableHeaderCell>
             <TableHeaderCell>Status</TableHeaderCell>
+            <TableHeaderCell>Actions</TableHeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {devices.map((devices) => (
-            <TableRow key={devices.Name}>
-              <TableCell>{devices.deviceName}</TableCell>
+          {devices.map((device) => (
+            <TableRow key={device.deviceId}>
+              <TableCell>{device.deviceName}</TableCell>
               <TableCell>
-                {devices.position}
+                {device.position}
               </TableCell>
               <TableCell>
-                {devices.sucursal}
+                {device.sucursal}
               </TableCell>
               <TableCell>
-                <Badge color={devices.status === 'Enabled' ? 'emerald' : 'red'} icon={RiFlag2Line}>
-                  {devices.status}
+                <Badge color={device.status === 'Enabled' ? 'emerald' : 'red'} icon={RiFlag2Line}>
+                  {device.status}
                 </Badge>
+              </TableCell>
+              <TableCell>
+                <Button size="sm" variant="secondary" icon={RiEdit2Line} onClick={() => handleChangeArea(device)}>
+                  Change Area
+                </Button>
               </TableCell>
             </TableRow>
           ))}
