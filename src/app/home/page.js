@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import Hls from 'hls.js';
 import Stream from '@/components/stream';
-import Grid from '@/components/grid';
+import Grid from '@/components/gridVideo';
 import Navbar from '@/components/NavBar';
 import { useUser } from '@/userContext'
 
