@@ -1,4 +1,5 @@
 "use client";
+import GridGif from "@/components/gridGif";
 import Navbar from "@/components/NavBar";
 
 
@@ -10,6 +11,7 @@ export default function Profile(){
         
         <>
         <Navbar></Navbar>
+        <GridGif></GridGif>
         </>
     )
 }
