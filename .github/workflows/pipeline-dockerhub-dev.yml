@@ -1,9 +1,9 @@
 name: Pipeline DockerHub Dev
 
 on:
-  release:
-    types:
-      - "published"
+  push:
+    branches:
+      - Development
 
 env:
   REPO_NAME: ''
