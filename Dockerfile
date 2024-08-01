@@ -1,5 +1,5 @@
 # Imagen base
-FROM node:14-alpine
+FROM node:18-alpine
 
 # Directorio de trabajo en el contenedor
 WORKDIR /usr/src/app
