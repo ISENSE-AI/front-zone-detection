@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Connect from '@/connect/Connect';
 import { useUser } from '@/userContext';
 
-const GridGif = ({ dateRange }) => {
+const GridGif = ({ dateRange, deviceId }) => {
   const [faulDevices, setFaulDevices] = useState([]);
   const connect = useMemo(() => new Connect(), []);
   const user = useUser();
@@ -45,7 +45,7 @@ const GridGif = ({ dateRange }) => {
     };
   
     fetchFaulDevices();
-  }, [connect, user.user.institutionId, dateRange]);
+  }, [connect, user.user.institutionId, dateRange, deviceId]);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
