@@ -1,5 +1,5 @@
 import React from 'react';
-import { DateRangePicker } from '@tremor/react';
+import { DateRangePicker, Title } from '@tremor/react';
 
 export default function Calendar({ setDateRange }) {
     const handleDateChange = (value) => {
@@ -34,6 +34,7 @@ export default function Calendar({ setDateRange }) {
 
     return (
         <div className="grid gap-6">
+            <Title>Select Date</Title>
             <DateRangePicker className='w-64' onValueChange={handleDateChange} />
         </div>
     );
