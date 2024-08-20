@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Connect from '@/connect/Connect';
 import { useUser } from '@/userContext';
 
-const GridGif = ({ dateRange, deviceId}) => {
+const GridGif = ({ dateRange }) => {
   const [faulDevices, setFaulDevices] = useState([]);
   const connect = useMemo(() => new Connect(), []);
   const user = useUser();
@@ -20,7 +20,7 @@ const GridGif = ({ dateRange, deviceId}) => {
           fetchPromises = dateRange.map(date => {
             const queryParams = {
               institutionId: `${user.user.institutionId}`,
-              date: date
+              date: date // Añadir la fecha a los parámetros de consulta
             };
   
             if (deviceId) { // Verifica si deviceId no es un string vacío o undefined
@@ -45,8 +45,7 @@ const GridGif = ({ dateRange, deviceId}) => {
     };
   
     fetchFaulDevices();
-  }, [connect, user.user.institutionId, dateRange, deviceId]);
-  
+  }, [connect, user.user.institutionId, dateRange]);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
