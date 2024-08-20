@@ -45,7 +45,7 @@ export default function Profile() {
         <>
             <Navbar />
             <main className="relative min-h-screen min-w-full bg-blue-100 p-6 sm:p-10">
-            <Card className="flex flex-row items-center p-4 w-2/5 mx-auto mt-6 p-4 gap-x-4">
+            <Card className="flex flex-row items-center  w-2/5 mx-auto mt-6 p-4 gap-x-4">
                 <Select selectData={deviceList} setData={setDeviceId} className="mr-4" />
                 <Calendar setDateRange={setDateRange} />
             </Card>
